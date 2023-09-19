@@ -29,7 +29,7 @@ class OrderItemsRule implements Rule
                 return false;
             }
 
-            if (!is_string($item['product_name']) || !is_numeric($item['product_price']) || !is_int($item['product_quantity']) || !is_numeric($item['product_subtotal'])) {
+            if (!is_string($item['product_name']) || !is_numeric($item['product_price']) || !is_numeric($item['product_quantity']) || !is_numeric($item['product_subtotal'])) {
                 return false;
             }
         }

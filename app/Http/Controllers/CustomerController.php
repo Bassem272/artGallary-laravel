@@ -12,7 +12,10 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        $customers=Customer::all();
+        return response()->json([
+            'message'=>'all customers in the database',
+            'all Customers'=>$customers],201);
     }
 
     /**
@@ -29,7 +32,19 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=$request->validate([
+            'name'=>'required|string',
+            'email'=>'required|email',
+            'phone'=>'required|string',
+            'address'=>'required|string',
+        ]);
+        $customer=Customer::create([
+            'name'=>$data['name'],
+            'email'=>$data['email'],
+            'phone'=>$data['phone'],
+            'address'=>$data['address'],
+        ]);
+        return response()->json(['message'=>'customer created successfully','customer'=>$customer],201);
     }
 
     /**
@@ -37,7 +52,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //
+        return response()->json(['message'=>'customer details','customer'=>$customer],201);
     }
 
     /**
@@ -53,7 +68,17 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        $data=$request->validate([
+
+            'email'=>'required|email',
+            'phone'=>'required|string',
+            'address'=>'required|string',
+        ]);
+        $customer->update($data);
+        return response()->json([
+            'message'=>'customer updated successfully',
+        'customer'=>$customer],
+        201);
     }
 
     /**
@@ -61,6 +86,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+        return response()->json(['message'=>'customer deleted successfully'],201);
     }
 }

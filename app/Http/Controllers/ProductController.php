@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+// App\Models\Product::where('name','Sherman Kuhlman')->first();
 
 class ProductController extends Controller
 {
@@ -25,7 +26,7 @@ class ProductController extends Controller
     // public function create(Request $request)
     // {
     //   $data = $request->validate([
-    //     'title' => 'required|string',
+    //     'name' => 'required|string',
     //     'price' => 'required|numeric',
     //     'description' => 'required|string',
     //     'category_id' => 'required|numeric',
@@ -37,7 +38,7 @@ class ProductController extends Controller
     //   ]);
     //   $product = Product::create(
     //     [
-    //       'title' => $data['title'],
+    //       'name' => $data['name'],
     //       'price' => $data['price'],
     //       'description' => $data['description'],
     //       'category_id' => $data['category_id'],
@@ -59,9 +60,10 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
 
             $data = $request->validate([
-              'title' => 'required|string',
+              'name' => 'required|string',
               'price' => 'required|numeric',
               'description' => 'required|string',
               'category_id' => 'required|numeric',
@@ -71,9 +73,10 @@ class ProductController extends Controller
 
 
             ]);
+            //  dd($data);
             $product = Product::create(
               [
-                'title' => $data['title'],
+                'name' => $data['name'],
                 'price' => $data['price'],
                 'description' => $data['description'],
                 'category_id' => $data['category_id'],
@@ -82,8 +85,10 @@ class ProductController extends Controller
                 'status' => $data['status'],
               ]
             );
+            // dd($product);
 
-            return response()->json(['message'=>'Product created successfully', 'product'=>$product],201,
+            return response()->json(['message'=>'Product created successfully',
+             'product'=>$product],201,
             ['Content-Type'=>'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
 );
     }
@@ -97,6 +102,28 @@ class ProductController extends Controller
 
         return
         response()->json(['message'=>'Product found', 'product'=>$product],200,
+        ['Content-Type'=>'application/json;charset=UTF-8', 'Charset' => 'utf-8'],);
+    }
+    public function search(Request $request )
+    {   $name = $request->json('name');
+
+        // $name=$request->name;
+        // $name = $request->input('name');
+        dd($name);
+        // $product = Product::where('name', 'LIKE', '%'.$name.'%')->get();
+        try {
+            // $product = Product::where('name', $keyword)->get();
+            $product = Product::where('name', 'LIKE', '%' . $name . '%')->collate('utf8_general_ci')->get();
+
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+        // $product = Product::where('name', $keyword)->get();
+        dd($product);
+
+
+        return response()->json(['message'=>'Product found', 'product'=>$product],200,
         ['Content-Type'=>'application/json;charset=UTF-8', 'Charset' => 'utf-8'],);
     }
 
@@ -114,7 +141,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $data =$request->validate([
-            'title'=>'required|string|max:255',
+            'name'=>'required|string|max:255',
             'description'=>'required|string',
             'category_id'=>'required|integer',
             'price'=>'required|numeric',

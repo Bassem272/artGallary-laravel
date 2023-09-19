@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('code')->nullable();
             $table->rememberToken();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
         });
     }

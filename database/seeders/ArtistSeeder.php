@@ -11,9 +11,6 @@ class artistSeeder extends Seeder
     {
       Artist::factory(10)->create();
 
-       Artist::factory()->create([
-            'name' => 'Test User',
-           'bio'=>'this si the test bio',
-        ]);
+    
     }
 }

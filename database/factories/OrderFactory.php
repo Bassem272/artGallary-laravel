@@ -36,7 +36,7 @@ class OrderFactory extends Factory
             // $table->json('order_items');
 
             'order_number' => $this->faker->unique()->numberBetween(10000, 99999),
-            'customer_id' => User::factory()->create()->id,
+            // 'customer_id' => Customer::factory()->create()->id,
             'order_date' => $this->faker->dateTime(),
             'order_status' => $this->faker->randomElement(['pending', 'processing', 'completed']),
             'created_at' => $this->faker->dateTime(),

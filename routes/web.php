@@ -3,6 +3,21 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArtController;
 use App\Http\Controllers\UserController;
+
+use Illuminate\Http\Request;
+
+
+use App\Http\Controllers\AuthController;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderItemController;
+use App\Models\User;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\SearchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +29,9 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 // Route::apiResource('art', ArtController::class);
 // Route::get('/art',"ArtController@index");
 // Route::get('/art', [ArtController::class, 'index']);
@@ -31,3 +46,34 @@ Route::get('/', function () {
 // Route::post('/users', [UserController::class, 'store']);
 // Route::put('/users/{id}', [UserController::class, 'update']);
 // Route::delete('/users/{id}', [UserController::class, 'destroy']);
+// Route::apiResource('users', UserController::class);
+// Route::apiResource('categories', CategoryController::class);
+// Route::apiResource('products', ProductController::class);
+
+// Route::apiResource('orders', OrderController::class);
+// Route::apiResource('customers', CustomerController::class);
+// Route::post('products/search',[ProductController::class,'searchByName']);
+// Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+
+
+
+
+// });
+//  Route::post('products/search', [ProductController::class,'searchByName']);
+// Route::get('/search', 'SearchController@search');
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    // Route::apiResource('users', UserController::class);
+    // Route::apiResource('categories', CategoryController::class);
+    // Route::apiResource('products', ProductController::class);
+
+    // Route::apiResource('orders', OrderController::class);
+    // Route::apiResource('customers', CustomerController::class);
+    // Route::post('products/search',[ProductController::class,'searchByName']);
+    // Route::get('products/search', [ProductController::class,'searchByName']);
+
+    Route::post('search', [SearchController::class,'search']);
+
+
+});
+Route::post('/register', [AuthController::class, 'register']);
+

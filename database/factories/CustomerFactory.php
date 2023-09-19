@@ -19,7 +19,7 @@ class CustomerFactory extends Factory
     {
         return [
             'name'=> User::factory()->create()->name,
-            'email'=> User::factory()->create()->name,
+            'email'=> User::factory()->create()->email,
             'phone'=> $this->faker->phoneNumber(),
             'address'=> $this->faker->address(),
         ];
