@@ -32,44 +32,11 @@ use App\Http\Controllers\SearchController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-// Route::apiResource('art', ArtController::class);
-// Route::get('/art',"ArtController@index");
-// Route::get('/art', [ArtController::class, 'index']);
-// Route::get('/art/{id}', [ArtController::class, 'showOne']);
-// Route::post('/art', [ArtController::class, 'store']);
-// Route::put('/art/{id}', [ArtController::class, 'update']);
-// Route::delete('/art/{id}', [ArtController::class, 'destroy']);
-
-// Route::get('/users', [UserController::class, 'index']);
-// Route::get('/users/{id}', [UserController::class, 'showOne']);
-// // Route::get('/users/csrf', [UserController::class, 'getCsrfToken']);
-// Route::post('/users', [UserController::class, 'store']);
-// Route::put('/users/{id}', [UserController::class, 'update']);
-// Route::delete('/users/{id}', [UserController::class, 'destroy']);
-// Route::apiResource('users', UserController::class);
-// Route::apiResource('categories', CategoryController::class);
-// Route::apiResource('products', ProductController::class);
-
-// Route::apiResource('orders', OrderController::class);
-// Route::apiResource('customers', CustomerController::class);
-// Route::post('products/search',[ProductController::class,'searchByName']);
-// Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 
 
 
-
-// });
-//  Route::post('products/search', [ProductController::class,'searchByName']);
-// Route::get('/search', 'SearchController@search');
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
-    // Route::apiResource('users', UserController::class);
-    // Route::apiResource('categories', CategoryController::class);
-    // Route::apiResource('products', ProductController::class);
 
-    // Route::apiResource('orders', OrderController::class);
-    // Route::apiResource('customers', CustomerController::class);
-    // Route::post('products/search',[ProductController::class,'searchByName']);
-    // Route::get('products/search', [ProductController::class,'searchByName']);
 
     Route::post('search', [SearchController::class,'search']);
 

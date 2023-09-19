@@ -15,7 +15,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::all();
-        return response(['message'=>'all orders in the database','all orders'=>$orders],201);
+        return response($orders,201);
     }
 
     /**
@@ -77,7 +77,7 @@ class OrderController extends Controller
             'customer_address'=>$data['customer_address'],
             'order_items'=>json_encode($data['order_items'])
         ]);
-        return response()->json(['message'=>'Order created successfully','order'=>$order]);
+        return response()->json([$order],201);
     }
 
     /**

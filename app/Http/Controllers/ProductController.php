@@ -13,10 +13,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-           $products = Product::all();
-           return response()->json($products,200,
-           ['Content-Type'=>'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
-);
+        $products = Product::all();
+        return response()->json(
+            $products,
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        );
     }
 
 
@@ -62,20 +64,20 @@ class ProductController extends Controller
     {
         // dd($request->all());
 
-            $data = $request->validate([
-              'name' => 'required|string',
-              'price' => 'required|numeric',
-              'description' => 'required|string',
-              'category_id' => 'required|numeric',
-              'image' => 'required|string',
-              'stock' => 'required|numeric',
-              'status' => 'required|string',
+        $data = $request->validate([
+            'name' => 'required|string',
+            'price' => 'required|numeric',
+            'description' => 'required|string',
+            'category_id' => 'required|numeric|nullable',
+            'image' => 'required|string|nullable',
+            'stock' => 'required|numeric',
+            'status' => 'required|string|nullable',
 
 
-            ]);
-            //  dd($data);
-            $product = Product::create(
-              [
+        ]);
+        //  dd($data);
+        $product = Product::create(
+            [
                 'name' => $data['name'],
                 'price' => $data['price'],
                 'description' => $data['description'],
@@ -83,14 +85,18 @@ class ProductController extends Controller
                 'image' => $data['image'],
                 'stock' => $data['stock'],
                 'status' => $data['status'],
-              ]
-            );
-            // dd($product);
+            ]
+        );
+        // dd($product);
 
-            return response()->json(['message'=>'Product created successfully',
-             'product'=>$product],201,
-            ['Content-Type'=>'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
-);
+        return response()->json(
+            [
+                'message' => 'Product created successfully',
+                'product' => $product
+            ],
+            201,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        );
     }
 
     /**
@@ -101,11 +107,15 @@ class ProductController extends Controller
         // $product=Product::find($product->id);
 
         return
-        response()->json(['message'=>'Product found', 'product'=>$product],200,
-        ['Content-Type'=>'application/json;charset=UTF-8', 'Charset' => 'utf-8'],);
+            response()->json(
+                ['message' => 'Product found', 'product' => $product],
+                200,
+                ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            );
     }
-    public function search(Request $request )
-    {   $name = $request->json('name');
+    public function search(Request $request)
+    {
+        $name = $request->json('name');
 
         // $name=$request->name;
         // $name = $request->input('name');
@@ -114,7 +124,6 @@ class ProductController extends Controller
         try {
             // $product = Product::where('name', $keyword)->get();
             $product = Product::where('name', 'LIKE', '%' . $name . '%')->collate('utf8_general_ci')->get();
-
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -123,8 +132,11 @@ class ProductController extends Controller
         dd($product);
 
 
-        return response()->json(['message'=>'Product found', 'product'=>$product],200,
-        ['Content-Type'=>'application/json;charset=UTF-8', 'Charset' => 'utf-8'],);
+        return response()->json(
+            ['message' => 'Product found', 'product' => $product],
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        );
     }
 
     /**
@@ -140,14 +152,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $data =$request->validate([
-            'name'=>'required|string|max:255',
-            'description'=>'required|string',
-            'category_id'=>'required|integer',
-            'price'=>'required|numeric',
-            'image'=>'required|string|max:2048',
-            'stock'=>'required|integer',
-            'status'=>'required|string|max:255',
+        $data = $request->validate([
+            // 'name' => 'required|string|max:255',
+            // 'description' => 'required|string',
+            // 'category_id' => 'required|numeric',
+            'price' => 'required|numeric',
+            // 'image' => 'required|string|max:2048',
+            'stock' => 'required|numeric',
+            'status' => 'required|string|max:255',
 
 
         ]);
@@ -155,9 +167,11 @@ class ProductController extends Controller
             $data
         );
 
-        return response()->json(['message'=>'Product updated successfully','updatedProduct'=>$product],200,
-            ['Content-Type'=>'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
-);
+        return response()->json(
+            ['message' => 'Product updated successfully', 'updatedProduct' => $product],
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        );
     }
 
     /**
@@ -166,8 +180,10 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return response()->json(['message'=>'Product deleted successfully'],200,
-            ['Content-Type'=>'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
-);
+        return response()->json(
+            ['message' => 'Product deleted successfully'],
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        );
     }
 }

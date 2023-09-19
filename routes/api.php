@@ -43,20 +43,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::post('/register', [AuthController::class, 'register']);
 
 // User login
-Route::post('/login', [AuthController::class, 'login']);
+
 
 // User logout (requires authentication)
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+Route::post('/login', [AuthController::class, 'login']);
 // routes/web.php
 //
-
 
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('products', ProductController::class);
-//  Route::get('/search', [SearchController::class,'search']);
+    //  Route::get('/search', [SearchController::class,'search']);
     Route::apiResource('orders', OrderController::class);
     Route::apiResource('customers', CustomerController::class);
     // Route::post('products/search',[ProductController::class,'searchByName']);
@@ -66,4 +66,3 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 
 });
 // Route::get('/search', 'SearchController@search');
-
