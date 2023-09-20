@@ -1,5 +1,5 @@
 
-## very important 
+## very important note
 ### run the following commands
 ```
 
