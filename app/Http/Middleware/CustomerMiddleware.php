@@ -17,7 +17,7 @@ class CustomerMiddleware
     {
          $authUser = $request->user();
 
-        if($request->user() && $request->header('role') == $authUser->role){
+        if($request->user() && $request->header('role') == 'customer'){
             return $next($request) ;
         }
        else{

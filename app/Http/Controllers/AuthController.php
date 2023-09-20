@@ -42,6 +42,7 @@ class AuthController extends Controller
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => bcrypt($validatedData['password']),
+            // 'phone'=> this->fake
         ]);
 // Generate a verification code/token
 // $verificationCode = Str::random(40);
@@ -54,9 +55,14 @@ class AuthController extends Controller
 // Mail::to($user->email)->send(new verifyEmail($verificationCode));
 
 // return response()->json(['message' => 'User registered successfully. Check your email for verification instructions.']);
-        $token = $user->createToken('authToken')->plainTextToken;
+        $token = $user->createToken('registerauthToken')->plainTextToken;
 
-        return response()->json(['message' => 'User registered successfully. Check your email for verification instructions.', 'token' => $token]);
+        return response()->json(
+            ['message' => 'User registered successfully.
+            Check your email for verification instructions.',
+            'token' => $token,
+            'user' => $user
+        ],201);
     }
     public function verifyEmail($code)
     {
@@ -101,7 +107,8 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = $request->user();
             $token = $user->createToken('authToken')->plainTextToken;
-            return response()->json(['message' => 'Login successful', 'token' => $token]);
+            return response()->json(['message' => 'Login successful',
+            'token' => $token,'user'=>$user], 201);
         }
 
         return response()->json(['message' => 'Unauthorized'], 401);
@@ -115,11 +122,10 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        // $request->user()->tokens()->delete();
 
-        return response()->json(['message' => 'Logout successful']);
+        return response()->json(['message' => 'Logout successful'], 200);
     }
-
     /**
      * Revoke all tokens for the authenticated user.
      *
