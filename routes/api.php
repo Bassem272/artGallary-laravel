@@ -46,10 +46,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // User logout (requires authentication)
-Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+Route::middleware(['auth:sanctum','customer'])->post('/logout', [AuthController::class, 'logout']);
 Route::post('/login', [AuthController::class, 'login']);
 // routes/web.php
 //
+ Route::post('/register', [AuthController::class, 'register']);
 
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
