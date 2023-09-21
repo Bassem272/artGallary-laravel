@@ -13,6 +13,7 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Product::class);
         $products = Product::all();
         return response()->json(
             $products,
@@ -62,6 +63,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Product::class);
         // dd($request->all());
 
         $data = $request->validate([
@@ -105,7 +107,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         // $product=Product::find($product->id);
-
+        $this->authorize('view', Product::class);
         return
             response()->json(
                 ['message' => 'Product found', 'product' => $product],
@@ -151,7 +153,10 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Product $product)
+
     {
+
+        $this->authorize('update', Product::class);
         $data = $request->validate([
             // 'name' => 'required|string|max:255',
             // 'description' => 'required|string',
@@ -179,6 +184,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+    $this->authorize('delete', Product::class);
         $product->delete();
         return response()->json(
             ['message' => 'Product deleted successfully'],

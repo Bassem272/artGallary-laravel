@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
@@ -14,6 +15,7 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Order::class);
         $orders = Order::all();
         return response($orders,201);
     }
@@ -52,6 +54,7 @@ class OrderController extends Controller
     // });
     public function store(Request $request)
     {
+        $this->authorize('create', Order::class);
         $data=$request->validate( [
             // 'order_number' => 'required|string',
             // 'order_date' => 'date',
@@ -85,6 +88,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        $this->authorize('view',Order::class);
         return response()->json(['message'=>'Order retrieved successfully','order'=>$order],201);
     }
 
@@ -101,6 +105,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        $this->authorize('update',Order::class);
         $data=$request->validate( [
 
             'order_status' => 'required|in:pending,processing,completed',

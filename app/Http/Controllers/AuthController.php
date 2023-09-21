@@ -113,6 +113,22 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Unauthorized'], 401);
     }
+    public function adminLogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $user = $request->user();
+            $token = $user->createToken('authToken')->plainTextToken;
+            return response()->json(['message' => 'Login successful',
+            'token' => $token,'user'=>$user], 201);
+        }
+
+        return response()->json(['message' => 'admin only authorized '], 401);
+    }
 
     /**
      * User logout.

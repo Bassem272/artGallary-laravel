@@ -39,31 +39,56 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// User registration
-// Route::post('/register', [AuthController::class, 'register']);
 
-// User login
-
-
-// User logout (requires authentication)
 Route::middleware(['auth:sanctum','customer'])->post('/logout', [AuthController::class, 'logout']);
 Route::post('/login', [AuthController::class, 'login']);
-// routes/web.php
-//
+Route::post('/admin-login', [AuthController::class, 'adminLogin']);
+
  Route::post('/register', [AuthController::class, 'register']);
 
+// ---->>>>>>>> we will use policies inside the controllers to differentiate between admin and customer <<<<<<<---------------
 
-Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+ Route::middleware(['auth:sanctum'])->group(function () {
+    // Common routes that both admin and customer can access
     Route::apiResource('users', UserController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('products', ProductController::class);
-    //  Route::get('/search', [SearchController::class,'search']);
     Route::apiResource('orders', OrderController::class);
     Route::apiResource('customers', CustomerController::class);
-    // Route::post('products/search',[ProductController::class,'searchByName']);
-    // Route::get('products/search', [ProductController::class,'searchByName']);
 
-
-
+    // Route-specific middleware for admin-only routes
+    // Route::middleware(['admin'])->group(function () {
+    //     // No need to define specific routes here; they share the common routes above.
+    //     // You can use policies to differentiate admin vs. customer permissions in controllers.
+    // });
 });
+
+// Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+//     Route::apiResource('users', UserController::class);
+//     Route::apiResource('categories', CategoryController::class);
+//     Route::apiResource('products', ProductController::class);
+//     //  Route::get('/search', [SearchController::class,'search']);
+//     Route::apiResource('orders', OrderController::class);
+//     Route::apiResource('customers', CustomerController::class);
+//     // Route::post('products/search',[ProductController::class,'searchByName']);
+//     // Route::get('products/search', [ProductController::class,'searchByName']);
+
+
+
+// });
+
+
+// Route::middleware(['auth:sanctum', 'customer'])->group(function () {
+//     Route::apiResource('users', UserController::class);
+//     Route::apiResource('categories', CategoryController::class);
+//     Route::apiResource('products', ProductController::class);
+//     //  Route::get('/search', [SearchController::class,'search']);
+//     Route::apiResource('orders', OrderController::class);
+//     Route::apiResource('customers', CustomerController::class);
+//     // Route::post('products/search',[ProductController::class,'searchByName']);
+//     // Route::get('products/search', [ProductController::class,'searchByName']);
+
+
+
+// });
 // Route::get('/search', 'SearchController@search');
