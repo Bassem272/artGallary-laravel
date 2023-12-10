@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\MyTestMail;
+use App\Mail\OrderShipped;
 use App\Mail\verifyEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -44,18 +45,22 @@ class AuthController extends Controller
             'password' => bcrypt($validatedData['password']),
             // 'phone'=> this->fake
         ]);
-// Generate a verification code/token
-// $verificationCode = Str::random(40);
 
-// Associate the code with the user (store it in the database)
-// $user->code = $verificationCode;
-// $user->save();
+ // Generate a verification code/token
+//  $verificationCode = Str::random(40);
 
-// Send an email with the verification link
-// Mail::to($user->email)->send(new verifyEmail($verificationCode));
+ // Associate the code with the user (store it in the database)
+//  $user->code = $verificationCode;
+//  $user->save();
 
-// return response()->json(['message' => 'User registered successfully. Check your email for verification instructions.']);
+ // Send an email with the verification link
+//  Mail::to($user->email)->send(new VerifyEmail($verificationCode));
+
+
         $token = $user->createToken('registerauthToken')->plainTextToken;
+
+        Mail::to('bassem.gehad95@yahoo.com') ->send(new OrderShipped());
+
 
         return response()->json(
             ['message' => 'User registered successfully.

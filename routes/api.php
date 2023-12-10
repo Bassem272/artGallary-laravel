@@ -63,32 +63,5 @@ Route::post('/admin-login', [AuthController::class, 'adminLogin']);
     // });
 });
 
-// Route::middleware(['auth:sanctum', 'admin'])->group(function () {
-//     Route::apiResource('users', UserController::class);
-//     Route::apiResource('categories', CategoryController::class);
-//     Route::apiResource('products', ProductController::class);
-//     //  Route::get('/search', [SearchController::class,'search']);
-//     Route::apiResource('orders', OrderController::class);
-//     Route::apiResource('customers', CustomerController::class);
-//     // Route::post('products/search',[ProductController::class,'searchByName']);
-//     // Route::get('products/search', [ProductController::class,'searchByName']);
 
 
-
-// });
-
-
-// Route::middleware(['auth:sanctum', 'customer'])->group(function () {
-//     Route::apiResource('users', UserController::class);
-//     Route::apiResource('categories', CategoryController::class);
-//     Route::apiResource('products', ProductController::class);
-//     //  Route::get('/search', [SearchController::class,'search']);
-//     Route::apiResource('orders', OrderController::class);
-//     Route::apiResource('customers', CustomerController::class);
-//     // Route::post('products/search',[ProductController::class,'searchByName']);
-//     // Route::get('products/search', [ProductController::class,'searchByName']);
-
-
-
-// });
-// Route::get('/search', 'SearchController@search');
